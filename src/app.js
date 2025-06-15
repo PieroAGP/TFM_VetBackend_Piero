@@ -25,7 +25,7 @@ app.use(express.json());// Devuelve un middleware
 
 // Evitar conflictos CORS
 app.use(cors({
-  origin: 'http://localhost:5173',  // Solo permite tu frontend
+  origin: 'tfmvetfrontpiero-production.up.railway.app',  // Solo permite tu frontend
   credentials: true                 // Permite cookies
 })); 
 
