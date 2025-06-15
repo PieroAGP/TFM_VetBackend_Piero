@@ -24,7 +24,7 @@ const app = express();
 const corsOptions = {
   origin: true, // Permite cualquier origen
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'Access-Control-Allow-Origin'],
   credentials: true,
   optionsSuccessStatus: 200
 };
