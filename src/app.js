@@ -22,24 +22,11 @@ const app = express();
 
 // Evitar conflictos CORS
 const corsOptions = {
-  origin: [
-    'http://localhost:3000/', // Para desarrollo local
-    'tfmvetfrontpiero-production.up.railway.app', // URL de tu frontend en Railway
-    // Agrega otras URLs si tienes múltiples dominios
-  ],
+  origin: true, // Permite cualquier origen
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: [
-    'Origin',
-    'X-Requested-With',
-    'Content-Type',
-    'Accept',
-    'Authorization',
-    'Cache-Control',
-    'X-Access-Token'
-  ],
-  credentials: true, // Si necesitas cookies/auth
-  optionsSuccessStatus: 200,
-  preflightContinue: false // Manejar preflight automáticamente
+  allowedHeaders: ['*'],
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 app.use(cookieParser());
