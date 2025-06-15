@@ -28,9 +28,12 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200
 };
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+
+app.use(cors());
 
 // Middleware adicional para manejar preflight requests manualmente si es necesario
+/*
 app.use((req, res, next) => {
   // Permitir todos los orígenes para preflight (OPTIONS)
   if (req.method === 'OPTIONS') {
@@ -42,7 +45,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-
+*/
 app.use(cookieParser());
 
 // Protección en cabeceras y otros
