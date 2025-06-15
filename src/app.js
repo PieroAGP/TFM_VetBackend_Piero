@@ -24,7 +24,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:3000/', // Para desarrollo local
-    'https://tfmvetfrontpiero-production.up.railway.app/', // URL de tu frontend en Railway
+    'https://tfmvetfrontpiero-production.up.railway.app', // URL de tu frontend en Railway
     // Agrega otras URLs si tienes múltiples dominios
   ],
   credentials: true, // Si necesitas cookies/auth
