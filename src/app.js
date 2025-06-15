@@ -45,9 +45,9 @@ app.use(
 app.use(express.json());// Devuelve un middleware
 app.get('/', (req, res) => {
   res.json({ 
-    message: 'Server is running!', 
+    message: 'Veterinaria API funcionando!',
     status: 'OK',
-    timestamp: new Date().toISOString()
+    mongodb: mongoose.connection.readyState === 1 ? 'conectado' : 'desconectado'
   });
 });
 
