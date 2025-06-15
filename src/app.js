@@ -29,6 +29,20 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
+
+// Middleware adicional para manejar preflight requests manualmente si es necesario
+app.use((req, res, next) => {
+  // Permitir todos los orígenes para preflight (OPTIONS)
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, X-Access-Token');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(cookieParser());
 
 // Protección en cabeceras y otros
@@ -49,18 +63,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Middleware adicional para manejar preflight requests manualmente si es necesario
-app.use((req, res, next) => {
-  // Permitir todos los orígenes para preflight (OPTIONS)
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, X-Access-Token');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    return res.sendStatus(200);
-  }
-  next();
-});
+
 
 // Ruta de health check adicional
 app.get('/health', (req, res) => {
