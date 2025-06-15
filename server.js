@@ -7,7 +7,7 @@ const startServer = async () => {
   try {
     //Conexión con la base de datos
     await connectDB();
-    const port = process.env.PORT; // Tendrá que depender de la variable de entorno
+    const PORT = process.env.PORT; // Tendrá que depender de la variable de entorno
     //Levantamos el servidor
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
