@@ -20,9 +20,6 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 
-// Middleware para parsear JSON
-app.use(express.json());// Devuelve un middleware
-
 // Evitar conflictos CORS
 const corsOptions = {
   origin: [
@@ -34,7 +31,6 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-
 app.use(cookieParser());
 
 // Protección en cabeceras y otros
@@ -43,6 +39,23 @@ app.use(
     crossOriginResourcePolicy: { policy: 'cross-origin' }
   })
 );
+
+
+// Middleware para parsear JSON
+app.use(express.json());// Devuelve un middleware
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Server is running!', 
+    status: 'OK',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Ruta de health check adicional
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
 
 
 // Protección contra consulta maliciosas
