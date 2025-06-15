@@ -24,10 +24,16 @@ const app = express();
 app.use(express.json());// Devuelve un middleware
 
 // Evitar conflictos CORS
-app.use(cors({
-  origin: 'https://tfmvetfrontpiero-production.up.railway.app/',  // Solo permite tu frontend
-  credentials: true                 // Permite cookies
-})); 
+const corsOptions = {
+  origin: [
+    'http://localhost:3000/', // Para desarrollo local
+    'https://tfmvetfrontpiero-production.up.railway.app/', // URL de tu frontend en Railway
+    // Agrega otras URLs si tienes múltiples dominios
+  ],
+  credentials: true, // Si necesitas cookies/auth
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
