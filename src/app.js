@@ -24,11 +24,22 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:3000/', // Para desarrollo local
-    'https://tfmvetfrontpiero-production.up.railway.app', // URL de tu frontend en Railway
+    'tfmvetfrontpiero-production.up.railway.app', // URL de tu frontend en Railway
     // Agrega otras URLs si tienes múltiples dominios
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cache-Control',
+    'X-Access-Token'
+  ],
   credentials: true, // Si necesitas cookies/auth
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  preflightContinue: false // Manejar preflight automáticamente
 };
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -49,6 +60,19 @@ app.get('/', (req, res) => {
     status: 'OK',
     mongodb: mongoose.connection.readyState === 1 ? 'conectado' : 'desconectado'
   });
+});
+
+// Middleware adicional para manejar preflight requests manualmente si es necesario
+app.use((req, res, next) => {
+  // Permitir todos los orígenes para preflight (OPTIONS)
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, X-Access-Token');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    return res.sendStatus(200);
+  }
+  next();
 });
 
 // Ruta de health check adicional

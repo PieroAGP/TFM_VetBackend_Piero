@@ -13,6 +13,22 @@ const startServer = async () => {
       console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
       console.log(`✅ MongoDB conectado correctamente`);
     });
+    // Manejo graceful de shutdown
+    process.on("SIGTERM", () => {
+      console.log("👋 SIGTERM recibido, cerrando servidor...");
+      server.close(() => {
+        console.log("✅ Servidor cerrado correctamente");
+        process.exit(0);
+      });
+    });
+
+    process.on("SIGINT", () => {
+      console.log("👋 SIGINT recibido, cerrando servidor...");
+      server.close(() => {
+        console.log("✅ Servidor cerrado correctamente");
+        process.exit(0);
+      });
+    });
   } catch (error) {
     console.log("No se ha podido levantar el servidor", error);
     process.exit(1);
